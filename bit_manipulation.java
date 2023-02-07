@@ -1,5 +1,17 @@
 public class bit_manipulation {
 
+  public static int fastExpo(int base, int power) {
+    int ans = 1;
+    while (power > 0) {
+      if ((power & 1) != 0) {
+        ans = ans * base;
+      }
+      base = base * base;
+      power = power >> 1;
+    }
+    return ans;
+  }
+
   public static int countSetBits(int n) {
     int count = 0;
     while (n != 0) {
@@ -52,8 +64,6 @@ public class bit_manipulation {
   }
 
   public static void main(String args[]) {
-    System.out.println(clearBits(31, 1, 3));
-    System.out.println(isPowerOfTwo(32));
-    System.out.println(countSetBits(16));
+    System.out.println(fastExpo(2, 12));
   }
 }
