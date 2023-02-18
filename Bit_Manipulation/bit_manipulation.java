@@ -1,3 +1,4 @@
+
 public class bit_manipulation {
 
   public static int fastExpo(int base, int power) {
