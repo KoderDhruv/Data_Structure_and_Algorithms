@@ -1,3 +1,4 @@
+
 public class Arrays {
 
   public static void max_profit_of_stock(int prices[]) {
