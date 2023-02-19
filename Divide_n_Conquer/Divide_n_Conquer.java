@@ -1,6 +1,10 @@
 
 public class Divide_n_Conquer {
 
+  public static void mergeSort(int arr[], int si, int ei) {
+    
+  }
+
   public static void printArr(int arr[]) {
     for (int i = 0; i < arr.length; i++) {
       System.out.print(arr[i] + " ");
