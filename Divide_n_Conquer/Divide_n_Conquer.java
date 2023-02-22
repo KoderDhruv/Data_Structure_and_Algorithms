@@ -45,7 +45,7 @@ public class Divide_n_Conquer {
   public static int partition(int arr[], int si, int ei) {
     int pivot = arr[ei];
     int i = si - 1;
-    // 'i' does not change when arr[j] is larger than pivot and then swaps when
+    // `i` does not change when arr[j] is larger than pivot and then swaps when
     // arr[j] is smaller, so smaller elements comes first in the array.
     // We can alternatively, run two pointers in a loop which swaps under certain
     // condition making smaller elements come first and larger after the pivot.
