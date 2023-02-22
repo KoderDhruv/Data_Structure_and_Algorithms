@@ -2,7 +2,6 @@
 public class Divide_n_Conquer {
 
   public static int searchRotatedArr(int arr[], int key, int si, int ei) {
-
     if (si > ei) {
       return -1;
     }
@@ -68,7 +67,6 @@ public class Divide_n_Conquer {
   }
 
   public static void mergeSort(int arr[], int si, int ei) {
-
     if (si >= ei) {
       return;
     }
