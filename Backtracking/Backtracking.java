@@ -1,14 +1,51 @@
 public class Backtracking {
 
+  public static boolean sudokuSolver(int sudoku[][], int row, int col) {
+    // base case
+    if (row == 0) {
+      return true;
+    }
+
+    // iterations
+    int nextRow = row, nextCol = col + 1;
+    if ((col + 1) == 9) {
+      nextRow = row + 1;
+      nextCol = 0;
+    }
+
+    // recursion
+    if (sudoku[row][col]!=0){
+      return sudokuSolver(sudoku, nextRow, nextCol);
+    }
+    for(int digit=1; digit<=9; digit++){
+      if (isSafe_sudoku(sudoku, row, col, digit)){
+        sudoku[row][col]=digit;
+        if(sudokuSolver(sudoku, nextRow, nextCol))
+      }
+    }
+  }
+
+  public static int gridWays(int curr_x, int curr_y, int rows, int columns) {
+    // base case
+    if (curr_x == (rows - 1) && curr_y == (columns - 1)) {
+      return 1;
+    } else if (curr_x == rows || curr_y == columns) {
+      return 0;
+    }
+
+    // recursion
+    return (gridWays(curr_x + 1, curr_y, rows, columns) + gridWays(curr_x, curr_y + 1, rows, columns));
+  }
+
   public static void nQueens(char board[][], int row) {
     // base case
-    if (row == board.length) {  
+    if (row == board.length) {
       printBoard(board);
       return;
     }
     // column loop
     for (int j = 0; j < board.length; j++) {
-      if (isSafe(board, row, j)) {
+      if (isSafe_chess(board, row, j)) {
         board[row][j] = 'Q';
         nQueens(board, row + 1); // function call
         board[row][j] = 'x'; // backtracking step
@@ -16,7 +53,7 @@ public class Backtracking {
     }
   }
 
-  public static boolean isSafe(char board[][], int row, int col) {
+  public static boolean isSafe_chess(char board[][], int row, int col) {
     // vertical up
     for (int i = row - 1; i >= 0; i--) {
       if (board[i][col] == 'Q') {
@@ -97,7 +134,18 @@ public class Backtracking {
     System.out.println();
   }
 
-  public static void main(String args[]) {  
+  public static void main(String args[]) {
+    int sudoku[][] = {
+        { 0, 0, 8, 0, 0, 0, 0, 0, 0 },
+        { 4, 9, 0, 1, 5, 7, 0, 0, 2 },
+        { 0, 0, 3, 0, 0, 4, 1, 9, 0 },
+        { 1, 8, 5, 0, 6, 0, 0, 2, 0 },
+        { 0, 0, 0, 0, 2, 0, 0, 6, 0 },
+        { 9, 6, 0, 4, 0, 5, 3, 0, 0 },
+        { 0, 3, 0, 0, 7, 2, 0, 0, 4 },
+        { 0, 4, 9, 0, 3, 0, 0, 5, 7 },
+        { 8, 2, 7, 0, 0, 9, 0, 1, 3 }
+    };
     int n = 4;
     char board[][] = new char[n][n];
     for (int i = 0; i < n; i++) {
@@ -114,5 +162,7 @@ public class Backtracking {
     findPermutation(str, "");
     System.out.println();
     nQueens(board, 0);
+    System.out.println();
+    System.out.println(gridWays(0, 0, 3, 3));
   }
 }
