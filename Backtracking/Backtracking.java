@@ -2,7 +2,7 @@ public class Backtracking {
 
   public static boolean sudokuSolver(int sudoku[][], int row, int col) {
     // base case
-    if (row == 0) {
+    if (row == 9) {
       return true;
     }
 
@@ -14,14 +14,53 @@ public class Backtracking {
     }
 
     // recursion
-    if (sudoku[row][col]!=0){
+    if (sudoku[row][col] != 0) {
       return sudokuSolver(sudoku, nextRow, nextCol);
     }
-    for(int digit=1; digit<=9; digit++){
-      if (isSafe_sudoku(sudoku, row, col, digit)){
-        sudoku[row][col]=digit;
-        if(sudokuSolver(sudoku, nextRow, nextCol))
+    for (int digit = 1; digit <= 9; digit++) {
+      if (isSafeSudoku(sudoku, row, col, digit)) {
+        sudoku[row][col] = digit;
+        if (sudokuSolver(sudoku, nextRow, nextCol)) {
+          return true;
+        }
+        sudoku[row][col] = 0;
       }
+    }
+    return false;
+  }
+
+  public static boolean isSafeSudoku(int sudoku[][], int row, int col, int digit) {
+    // column
+    for (int i = 0; i <= 8; i++) {
+      if (sudoku[i][col] == digit) {
+        return false;
+      }
+    }
+    // row
+    for (int i = 0; i <= 8; i++) {
+      if (sudoku[row][i] == digit) {
+        return false;
+      }
+    }
+    // 3x3 matrices
+    int sr = (row / 3) * 3;
+    int sc = (col / 3) * 3;
+    for (int i = sr; i < sr + 3; i++) {
+      for (int j = sc; j < sc + 3; j++) {
+        if (sudoku[i][j] == digit) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  public static void printSudoku(int sudoku[][]) {
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        System.out.print(sudoku[i][j] + " ");
+      }
+      System.out.println();
     }
   }
 
@@ -45,7 +84,7 @@ public class Backtracking {
     }
     // column loop
     for (int j = 0; j < board.length; j++) {
-      if (isSafe_chess(board, row, j)) {
+      if (isSafeChess(board, row, j)) {
         board[row][j] = 'Q';
         nQueens(board, row + 1); // function call
         board[row][j] = 'x'; // backtracking step
@@ -53,7 +92,7 @@ public class Backtracking {
     }
   }
 
-  public static boolean isSafe_chess(char board[][], int row, int col) {
+  public static boolean isSafeChess(char board[][], int row, int col) {
     // vertical up
     for (int i = row - 1; i >= 0; i--) {
       if (board[i][col] == 'Q') {
@@ -164,5 +203,12 @@ public class Backtracking {
     nQueens(board, 0);
     System.out.println();
     System.out.println(gridWays(0, 0, 3, 3));
+    System.out.println();
+    if (sudokuSolver(sudoku, 0, 0)) {
+      System.out.println("Solution  exists");
+      printSudoku(sudoku);
+    } else {
+      System.out.println("Solution doesn't exist");
+    }
   }
 }
