@@ -1,4 +1,3 @@
-
 public class LinkedList {
   public static class Node {
     int data;
@@ -207,25 +206,99 @@ public class LinkedList {
   }
 
   public void removeCycle() {
-    // first detect cycle, then assign slow to head and then traverse slow and fast by one node, the node where they meet is junction, last node will be previous of last
-    
+    // first detect cycle, then assign slow to head and then traverse slow and fast
+    // by one node, the node where they meet is junction, last node will be previous
+    // of last
+    Node slow = head;
+    Node fast = head;
+    boolean cycle = false;
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+      if (slow == fast) {
+        cycle = true;
+        break;
+      }
+    }
+    if (cycle == false) {
+      return;
+    }
+    // finding meeting point and pointing prev to null
+    slow = head;
+    Node prev = null;
+    while (slow != fast) {
+      prev = fast;
+      slow = slow.next;
+      fast = fast.next;
+    }
+    prev.next = null;
   }
 
-  public static void main(String args[]) {
+  public Node getMid(Node head) {
+    Node slow = head;
+    Node fast = head;
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    return slow;
+  }
+
+  public Node merge(Node head1, Node head2) {
+    Node merged = new Node(-1);
+    Node temp = merged;
+
+    while (head1 != null && head2 != null) {
+      if (head1.data < head2.data) {
+        temp.next = head1;
+        head1 = head1.next;
+      } else {
+        temp.next = head2;
+        head2 = head2.next;
+      }
+      temp = temp.next;
+    }
+    while (head1 != null) {
+      temp.next = head1;
+      head1 = head1.next;
+      temp = temp.next;
+    }
+    while (head2 != null) {
+      temp.next = head2;
+      head2 = head2.next;
+      temp = temp.next;
+    }
+    return merged.next;
+  }
+
+  public Node mergeSort(Node head) {
+    if (head == null || head.next == null) {
+      return head;
+    }
+    Node mid = getMid(head);
+    Node secondHalf = mid.next;
+    mid.next = null;
+    Node left = mergeSort(head);
+    Node right = mergeSort(secondHalf);
+    Node sorted = merge(left, right);
+    return sorted;
+  }
+
+  public static void main(String[] args) {
     LinkedList ll = new LinkedList();
-    // ll.head = new Node(8);
-    // ll.head.next = new Node(10);
     ll.addFirst(1);
+    ll.addFirst(2);
     ll.addFirst(3);
+    ll.addFirst(4);
     ll.addLast(8);
-    ll.addLast(6);
-    ll.addLast(5);
-    ll.add(2, 2);
-    ll.printList();
-    System.out.println(ll.recursiveSearch(head, 8, 0));
-    ll.reverse();
-    ll.printList();
-    ll.deleteNfromEnd(3);
+    // ll.addLast(6);
+    // ll.addLast(5);
+    // ll.add(2, 2);
+    // ll.printList();
+    // System.out.println(ll.recursiveSearch(head, 8, 0));
+    // ll.reverse();
+    // ll.printList();
+    // ll.head = ll.mergeSort(ll.head);
     ll.printList();
   }
 }
