@@ -1,5 +1,5 @@
 
-public class Arrays {
+public class array {
 
   public static void max_profit_of_stock(int prices[]) {
     int buy_price = Integer.MAX_VALUE;

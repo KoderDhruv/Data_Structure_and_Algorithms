@@ -1,7 +1,7 @@
 import java.util.*;
 import java.util.LinkedList;
 
-public class Queues {
+public class queue {
 
   static class QueueA {
     static int arr[];

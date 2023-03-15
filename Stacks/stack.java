@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class Stacks {
+public class stack {
 
   public static class Node {
     int data;
@@ -30,7 +30,7 @@ public class Stacks {
       newNode.next = head;
       head = newNode;
     }
-
+    
     public int pop() {
       if (isEmpty()) {
         return -1;

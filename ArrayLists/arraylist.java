@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ArrayLists {
+public class arraylist {
 
   public static boolean pairSumRotated(ArrayList<Integer> list, int target) {
     int pivot = -1;
