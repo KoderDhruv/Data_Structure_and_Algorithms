@@ -260,8 +260,74 @@ public class trees {
     return path1.get(i - 1);
   }
 
-  public static Node lca_optimized(Node root, int n1, int n2){
-    
+  public static Node lca_optimized(Node root, int n1, int n2) {
+    if (root == null || root.data == n1 || root.data == n2) {
+      return root;
+    }
+    Node leftLca = lca_optimized(root.left, n1, n2);
+    Node rightLca = lca_optimized(root.right, n1, n2);
+    if (rightLca == null) {
+      return leftLca;
+    }
+    if (leftLca == null) {
+      return rightLca;
+    }
+    return root;
+  }
+
+  public static int lcaDist(Node root, int n) {
+    if (root == null) {
+      return -1;
+    }
+    if (root.data == n) {
+      return 0;
+    }
+    int leftDist = lcaDist(root.left, n);
+    int rightDist = lcaDist(root.right, n);
+    if (leftDist == -1 && rightDist == -1) {
+      return -1;
+    } else if (leftDist == -1) {
+      return rightDist + 1;
+    } else {
+      return leftDist + 1;
+    }
+  }
+
+  public static int minDistance(Node root, int n1, int n2) {
+    Node lca = lca_optimized(root, n1, n2);
+    return lcaDist(lca, n1) + lcaDist(lca, n2);
+  }
+
+  public static int KthAncestor(Node root, int n, int k) {
+    if (root == null) {
+      return -1;
+    }
+    if (root.data == n) {
+      return 0;
+    }
+    int leftDist = KthAncestor(root.left, n, k);
+    int rightDist = KthAncestor(root.right, n, k);
+    if (leftDist == -1 && rightDist == -1) {
+      return -1;
+    }
+    int max = Math.max(leftDist, rightDist);
+    if (max + 1 == k) {
+      System.out.println(root.data);
+    }
+    return max + 1;
+  }
+
+  public static int transformSumTree(Node root) {
+    if (root == null) {
+      return 0;
+    }
+    int leftSum = transformSumTree(root.left);
+    int rightSum = transformSumTree(root.right);
+    int data = root.data;
+    int newLeft = (root.left == null) ? 0 : root.left.data;
+    int newRight = (root.right == null) ? 0 : root.right.data;
+    root.data = newLeft + leftSum + newRight + rightSum;
+    return data;
   }
 
   public static void main(String args[]) {
@@ -277,47 +343,6 @@ public class trees {
     // System.out.println(tree.diameter(root));
     // System.out.println(tree.diameter_optimized(root).diam);
 
-    // Subtree of another tree
-
-    // Node root = new Node(1);
-    // root.left = new Node(2);
-    // root.right = new Node(3);
-    // root.left.left = new Node(4);
-    // root.left.right = new Node(5);
-    // root.right.left = new Node(6);
-    // root.right.right = new Node(7);
-
-    // Node subroot = new Node(2);
-    // subroot.left = new Node(4);
-    // subroot.right = new Node(5);
-
-    // System.out.println(isSubtree(root, subroot));
-
-    // Top view of a tree
-
-    // Node root = new Node(1);
-    // root.left = new Node(2);
-    // root.right = new Node(3);
-    // root.left.left = new Node(4);
-    // root.left.right = new Node(5);
-    // root.right.left = new Node(6);
-    // root.right.right = new Node(7);
-    // topView(root);
-
-    // Elements in Kth level of tree
-
-    // Node root = new Node(1);
-    // root.left = new Node(2);
-    // root.right = new Node(3);
-    // root.left.left = new Node(4);
-    // root.left.right = new Node(5);
-    // root.right.left = new Node(6);
-    // root.right.right = new Node(7);
-    // int k = 3;
-    // KLevel(root, k, 1);
-
-    // Lowest Common Ancestor
-    int n1=4, n2=5;
     Node root = new Node(1);
     root.left = new Node(2);
     root.right = new Node(3);
@@ -325,7 +350,36 @@ public class trees {
     root.left.right = new Node(5);
     root.right.left = new Node(6);
     root.right.right = new Node(7);
-    System.out.println(lca(root, n1, n2).data);
-    System.out.println(lca_optimized(root, n1, n2).data);
+
+    // Subtree of another tree
+    // Node subroot = new Node(2);
+    // subroot.left = new Node(4);
+    // subroot.right = new Node(5);
+    // System.out.println(isSubtree(root, subroot));
+
+    // Top view of a tree
+    // topView(root);
+
+    // Elements in Kth level of tree
+    // int k = 3;
+    // KLevel(root, k, 1);
+
+    // Lowest Common Ancestor
+    // int n1 = 4, n2 = 5;
+    // System.out.println(lca(root, n1, n2).data);
+    // System.out.println(lca_optimized(root, n1, n2).data);
+
+    // Minimum distance between 2 nodes
+    // int n1 = 4, n2 = 6;
+    // System.out.println(minDistance(root, n1, n2));
+
+    // Kth Ancestor
+    // int n = 5, k = 2;
+    // KthAncestor(root, n, k);
+
+    // Transform to sum tree
+    // transformSumTree(root);
+    // BinaryTree tree = new BinaryTree();
+    // tree.preorder(root);
   }
 }
