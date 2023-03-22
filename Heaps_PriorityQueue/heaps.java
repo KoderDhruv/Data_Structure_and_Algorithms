@@ -1,4 +1,3 @@
-import java.beans.BeanProperty;
 import java.util.*;
 
 public class heaps {
@@ -199,7 +198,22 @@ public class heaps {
   }
 
   public static void slidingWindowMax(int arr[], int k) {
-    
+    int res[] = new int[arr.length - k + 1];
+    PriorityQueue<Pair> pq = new PriorityQueue<>();
+    for (int i = 0; i < k; i++) {
+      pq.add(new Pair(arr[i], i));
+    }
+    res[0] = pq.peek().val;
+    for (int i = k; i < arr.length; i++) {
+      while (pq.size() > 0 && pq.peek().idx <= (i - k)) {
+        pq.remove();
+      }
+      pq.add(new Pair(arr[i], i));
+      res[i - k + 1] = pq.peek().val;
+    }
+    for (int i = 0; i < res.length; i++) {
+      System.out.print(res[i] + " ");
+    }
   }
 
   public static void main(String args[]) {
@@ -261,7 +275,8 @@ public class heaps {
     // kWeakSoldiers(army, k);
 
     // Maximum element in Sliding Window
-    int arr[] = { 1, 3, -1, -3, 5, 3, 6, 7 };
-    int k = 3; // sliding_window
+    // int arr[] = { 1, 3, -1, -3, 5, 3, 6, 7 };
+    // int k = 3; // sliding_window
+    // slidingWindowMax(arr, k);
   }
 }
