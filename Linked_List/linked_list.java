@@ -1,3 +1,4 @@
+
 public class linked_list {
   public static class Node {
     int data;
@@ -11,8 +12,8 @@ public class linked_list {
 
   static class Linked_List {
 
-    public static Node head;
-    public static Node tail;
+    public Node head;
+    public Node tail;
     int size;
 
     public void addFirst(int data) {
@@ -53,6 +54,7 @@ public class linked_list {
         System.err.print(temp.data + " -> ");
         temp = temp.next;
       }
+      System.out.print("null");
       System.out.println();
     }
 
@@ -286,15 +288,122 @@ public class linked_list {
       return sorted;
     }
 
+    public void zigZag(Node head) {
+      // Find Mid
+      Node slow = head;
+      Node fast = head;
+      while (fast != null && fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+      }
+      Node mid = slow;
+
+      // Reverse Second half
+      Node curr = mid.next;
+      mid.next = null;
+      Node prev = null;
+      Node next;
+      while (curr != null) {
+        next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
+      }
+      Node left = head;
+      Node right = prev;
+      Node nextL, nextR;
+
+      // Alternate Merge
+      while (left != null && right != null) {
+        nextL = left.next;
+        left.next = right;
+        nextR = right.next;
+        right.next = nextL;
+        left = nextL;
+        right = nextR;
+      }
+    }
+  }
+
+  public static class NodeDll {
+    int data;
+    NodeDll next;
+    NodeDll prev;
+
+    public NodeDll(int data) {
+      this.data = data;
+      this.next = null;
+      this.prev = null;
+    }
+  }
+
+  static class DoublyLinked_List {
+    public NodeDll headDll;
+    public NodeDll tailDll;
+    public int sizeDll;
+
+    public void addFirst(int data) {
+      NodeDll newNodeDll = new NodeDll(data);
+      if (headDll == null) {
+        headDll = tailDll = newNodeDll;
+        return;
+      }
+      newNodeDll.next = headDll;
+      headDll.prev = newNodeDll;
+      headDll = newNodeDll;
+      sizeDll++;
+    }
+
+    public void printDll() {
+      NodeDll temp = headDll;
+      while (temp != null) {
+        System.out.print(temp.data + " <-> ");
+        temp = temp.next;
+      }
+      System.out.println("null");
+    }
+
+    public int removeFirstDll() {
+      if (headDll == null) {
+        System.out.println("Dll is empty!");
+        return Integer.MIN_VALUE;
+      }
+      if (sizeDll == 1) {
+        int val = headDll.data;
+        headDll = tailDll = null;
+        sizeDll--;
+        return val;
+      }
+      int val = headDll.data;
+      headDll = headDll.next;
+      headDll.prev = null;
+      sizeDll--;
+      return val;
+    }
+
+    public void reverseDll() {
+      NodeDll curr = headDll;
+      NodeDll prev = null;
+      NodeDll next;
+      while (curr != null) {
+        next = curr.next;
+        curr.next = prev;
+        curr.prev = next;
+        prev = curr;
+        curr = next;
+      }
+      headDll = prev;
+    }
   }
 
   public static void main(String[] args) {
-    Linked_List ll = new Linked_List();
-    ll.addFirst(1);
-    ll.addFirst(2);
-    ll.addFirst(3);
-    ll.addFirst(4);
-    ll.addLast(8);
+    // Implementation from scratch
+    // Linked_List ll = new Linked_List();
+    // ll.addFirst(1);
+    // ll.addFirst(2);
+    // ll.addFirst(3);
+    // ll.addFirst(4);
+    // ll.addLast(8);
     // ll.addLast(6);
     // ll.addLast(5);
     // ll.add(2, 2);
@@ -303,6 +412,27 @@ public class linked_list {
     // ll.reverse();
     // ll.printList();
     // ll.head = ll.mergeSort(ll.head);
-    ll.printList();
+    // ll.printList();
+
+    // Zig-Zag Linked list
+    // Linked_List ll = new Linked_List();
+    // ll.addLast(1);
+    // ll.addLast(2);
+    // ll.addLast(3);
+    // ll.addLast(4);
+    // ll.addLast(5);
+    // ll.zigZag(ll.head);
+    // ll.printList();
+
+    // Implementation DoublyLinkedList
+    DoublyLinked_List dll = new DoublyLinked_List();
+    dll.addFirst(3);
+    dll.addFirst(2);
+    dll.addFirst(1);
+    dll.printDll();
+    dll.removeFirstDll();
+    dll.printDll();
+    dll.reverseDll();
+    dll.printDll();
   }
 }
