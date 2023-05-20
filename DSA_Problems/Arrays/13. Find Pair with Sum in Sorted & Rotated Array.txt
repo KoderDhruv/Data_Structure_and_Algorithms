@@ -1,0 +1,71 @@
+// Approach 1
+// If arr[l] + arr[r] is greater than X, update r = (N+r-1) % N.
+// If arr[l] + arr[r] is less than X, update l = (l+1) % N.
+// If arr[l] + arr[r] is equal to the value X, then return true.
+
+class PairInSortedRotated {
+	static boolean pairInSortedRotated(int arr[], int n, int x) {
+		// Find the pivot element
+		int i;
+		for (i = 0; i < n - 1; i++)
+			if (arr[i] > arr[i + 1])
+				break;
+
+		// l is now index of smallest element
+		int l = (i + 1) % n;
+
+		// r is now index of largest element
+		int r = i;
+
+		// Keep moving either l or r till they meet
+		while (l != r) {
+			// If we find a pair with sum x, we return true
+			if (arr[l] + arr[r] == x)
+				return true;
+
+			// If current pair sum is less, move to the higher sum
+			if (arr[l] + arr[r] < x)
+				l = (l + 1) % n;
+
+			// Move to the lower sum side
+			else
+				r = (n + r - 1) % n;
+		}
+		return false;
+	}
+}
+
+// Approach 2(better)
+// 1. Find the pivot element in the rotated sorted array. If the pivot element is greater than the first element of the array, then the pivot lies in the second half of the array; otherwise, it lies in the first half of the array.
+// 2. After finding the pivot element, initialize two pointers left and right at the start and end of the array, respectively.
+// 3. Loop through the array and check if the sum of the elements at the left and right pointers is equal to the given sum. If it is, then return true.
+// 4. If the sum is less than the given sum, increment the left pointer, else decrement the right pointer.
+// 5. If the loop completes and no pair is found, return false.
+
+public class FindPairInRotatedArray {
+	public static boolean findPair(int[] arr, int x) {
+		int n = arr.length;
+		// find pivot element
+		int pivot = 0;
+		for (int i = 0; i < n-1; i++) {
+			if (arr[i] > arr[i+1]) {
+				pivot = i+1;
+				break;
+			}
+		}
+		int left = pivot;
+		int right = pivot-1;
+		while (left != right) {
+			if (arr[left] + arr[right] == x) {
+				return true;
+			}
+			else if (arr[left] + arr[right] < x) {
+				left = (left+1) % n;
+			}
+			else {
+				right = (right-1+n) % n;
+			}
+		}
+		return false;
+	}
+}

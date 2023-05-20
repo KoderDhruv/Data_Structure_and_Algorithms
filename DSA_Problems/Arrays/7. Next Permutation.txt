@@ -1,0 +1,31 @@
+// https://www.youtube.com/watch?v=LuLCLgMElus
+
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int n = nums.length, k = n - 2, l = n - 1; // k is infection point
+        while (k >= 0 && nums[k] >= nums[k + 1]) {
+            k--;
+        }
+        if (k < 0) {
+            reverse(nums, 0, n - 1);
+        } else {
+            while (l > k && nums[l] <= nums[k]) {
+                l--;
+            }
+// swaps infection point and no. just greater than it from the end.
+            swap(nums, k, l); 
+            // makes the rest in ascending order.
+            reverse(nums, k + 1, n - 1); 
+        }
+    }
+    private void reverse(int[] nums, int i, int j) {
+        while (i < j) {
+            swap(nums, i++, j--);
+        }
+    }
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}

@@ -1,0 +1,40 @@
+// https://www.youtube.com/watch?v=qfbBRtbhQ04
+// https://www.youtube.com/watch?v=MvklwzVz654 **(xor)
+
+public class Solution {
+    public ArrayList<Integer> repeatedNumber(final List<Integer> A) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        int xor=0; int x=0; int y=0;
+        for(int i=0; i<A.size(); i++){
+            xor=xor^A.get(i);
+        }
+        for(int i=1; i<=A.size(); i++){
+            xor=xor^i;
+        }
+        int rsbm=xor & -xor; // rightmost set bit mask
+        for(int i=0; i<A.size(); i++){
+            if((A.get(i) & rsbm)==0){
+                x=x^A.get(i);
+            } else{
+                y=y^A.get(i);
+            }
+        }
+        for(int i=1; i<=A.size(); i++){
+            if((i & rsbm)==0){
+                x=x^i;
+            } else{
+                y=y^i;
+            }
+        }
+        for(int i=0; i<A.size(); i++){
+            if(A.get(i)==x){
+                ans.add(x); ans.add(y);
+                break;
+            } else if(A.get(i)==y){
+                ans.add(y); ans.add(x);
+                break;
+            }
+        }
+        return ans;
+    }
+}
