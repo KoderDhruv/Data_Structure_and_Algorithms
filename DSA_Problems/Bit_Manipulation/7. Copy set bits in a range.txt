@@ -1,0 +1,20 @@
+
+class Solution{
+    // if r is greater than rightmost set bit
+    static int len(int num){
+        int len = ((int)(Math.log(num)/Math.log(2))) +1;
+        return len;
+    }
+    
+    static int setSetBit(int x, int y, int l, int r){
+        // https://www.youtube.com/watch?v=v7pUZw-ZOYU&ab_channel=Pepcoding
+    
+        r=Math.min(r, Math.max(len(x),len(y)));
+        int mask=1;
+        mask=(mask<<(r-l+1)); mask--;
+        mask=(mask<<(l-1));
+        mask=(mask & y);
+        x=(x | mask);
+        return x;
+    }
+}

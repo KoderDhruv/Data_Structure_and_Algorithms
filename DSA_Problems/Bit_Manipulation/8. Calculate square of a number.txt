@@ -1,0 +1,16 @@
+class Solution{
+
+  public int squareOfNumber(int n){
+    int x=n;
+    int i=0;
+    int ans=0;
+    while(x){
+      if(x&1){
+        ans+=(n<<i);
+      }
+      x>>=1; i++;
+    }
+    return ans;
+  }
+
+}
