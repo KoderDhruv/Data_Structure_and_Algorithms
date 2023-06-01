@@ -1,5 +1,5 @@
 
-  class Solution{
+class Solution{
     public static long divide(long a, long b){
         long sign = ((a<0 && b>=0) || (a>=0 && b<0))?-1L:1L;
         a = Math.abs(a);
