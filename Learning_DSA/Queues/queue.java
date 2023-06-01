@@ -255,17 +255,20 @@ public class queue {
   }
 
   public static void main(String args[]) {
-    Stack2Queues q = new Stack2Queues();
-    q.add(1);
-    q.add(2);
-    q.add(3);
+    // Basic Implementation
+    // Stack2Queues q = new Stack2Queues();
+    // // Stack2Queues q = new Queue2Stack();
+    // q.add(1);
+    // q.add(2);
+    // q.add(3);
     // System.out.println(q.pop());
-    q.add(4);
-    // System.out.println(q.pop());
-    q.add(5);
-    while (!q.isEmpty()) {
-      System.out.println(q.peek());
-      q.pop();
-    }
+    // q.add(4);
+    // q.add(5);
+    // while (!q.isEmpty()) {
+    //   System.out.println(q.peek());
+    //   q.pop();
+    // }
+    
+    // 
   }
 }
