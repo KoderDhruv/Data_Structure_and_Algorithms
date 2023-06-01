@@ -11,6 +11,6 @@
                 ans |= 1L<<i;
             }
         }
-        return sign<0?-ans:ans;
+        return sign<0 ?-ans:ans;
     }
 }
