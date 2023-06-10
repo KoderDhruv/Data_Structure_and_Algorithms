@@ -81,7 +81,7 @@ public class queue {
       rear = (rear + 1) % size;
       arr[rear] = data;
     }
-
+    
     public int remove() {
       if (isEmpty()) {
         System.out.println("Queue is empty");
@@ -254,9 +254,32 @@ public class queue {
     }
   }
 
+  public static void firstNonRepeatingLetter(String str) {
+    int freq[] = new int[26];
+    Queue<Character> q = new LinkedList<>();
+    for (int i = 0; i < str.length(); i++) {
+      char ch = str.charAt(i);
+      q.add(ch);
+      freq[ch - 'a']++;
+      while (!q.isEmpty() && freq[q.peek() - 'a'] > 1) {
+        q.remove();
+      }
+      if (q.isEmpty()) {
+        System.out.println(-1 + " ");
+      } else {
+        System.out.println(q.peek() + " ");
+      }
+    }
+    System.out.println();
+  }
+
+  public static void Interleave(Queue<Integer> q){
+    
+  }
+
   public static void main(String args[]) {
     // Basic Implementation
-    // Stack2Queues q = new Stack2Queues();
+    // // Stack2Queues q = new Stack2Queues();
     // // Stack2Queues q = new Queue2Stack();
     // q.add(1);
     // q.add(2);
@@ -265,10 +288,12 @@ public class queue {
     // q.add(4);
     // q.add(5);
     // while (!q.isEmpty()) {
-    //   System.out.println(q.peek());
-    //   q.pop();
+    // System.out.println(q.peek());
+    // q.pop();
     // }
-    
-    // 
+
+    // First Non-Repeating Letter
+    // firstNonRepeatingLetter("aaaaaa");
+
   }
 }

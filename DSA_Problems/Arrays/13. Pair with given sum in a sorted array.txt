@@ -35,7 +35,7 @@ class PairInSortedRotated {
 	}
 }
 
-// Approach 2(better)
+// Approach 2
 // 1. Find the pivot element in the rotated sorted array. If the pivot element is greater than the first element of the array, then the pivot lies in the second half of the array; otherwise, it lies in the first half of the array.
 // 2. After finding the pivot element, initialize two pointers left and right at the start and end of the array, respectively.
 // 3. Loop through the array and check if the sum of the elements at the left and right pointers is equal to the given sum. If it is, then return true.

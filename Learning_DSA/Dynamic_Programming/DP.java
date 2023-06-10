@@ -63,7 +63,7 @@ public class DP {
   }
 
   public static int knapsackTabulation(){
-    
+    return 0;
   }
 
   public static void main(String args[]) {

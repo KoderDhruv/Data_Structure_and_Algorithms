@@ -1,0 +1,15 @@
+class GfG{
+    //Function to reverse the queue.
+    public Queue<Integer> rev(Queue<Integer> q){
+        //add code here.
+        Stack<Integer> buffer=new Stack<>();
+        Queue<Integer> ans=new LinkedList<>();
+        while(!q.isEmpty()){
+            buffer.push(q.remove());
+        }
+        while(!buffer.isEmpty()){
+            ans.add(buffer.pop());
+        }
+        return ans;
+    }
+}

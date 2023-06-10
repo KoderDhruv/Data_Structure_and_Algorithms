@@ -13,6 +13,69 @@ public class graphs {
     }
   }
 
+  // Detect cycle in a graph
+  public static boolean cycleDetect(ArrayList<Edge>[] graph) {
+    boolean[] vis = new boolean[graph.length];
+    for (int i = 0; i < graph.length; i++) {
+      if (!vis[i]) {
+        if(cycleDetectUtil(graph, vis, i, -1)){
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  public static boolean cycleDetectUtil(ArrayList<Edge>[] graph, boolean[] vis, int curr, int par) {
+    
+    return false;
+  }
+
+  // BFS for disjoint components in a garph
+  public static void bfsConnect(ArrayList<Edge>[] graph) {
+    boolean vis[] = new boolean[graph.length];
+    for (int i = 0; i < graph.length; i++) {
+      if (!vis[i]) {
+        bfsUtil(graph, vis);
+      }
+    }
+  }
+
+  public static void bfsUtil(ArrayList<Edge>[] graph, boolean[] vis) {
+    Queue<Integer> q = new LinkedList<>();
+    q.add(0);
+    while (!q.isEmpty()) {
+      int curr = q.remove();
+      if (!vis[curr]) {
+        System.out.println(curr + " ");
+        vis[curr] = true;
+        for (int i = 0; i < graph[curr].size(); i++) {
+          Edge e = graph[curr].get(i);
+          q.add(e.dest);
+        }
+      }
+    }
+  }
+
+  // DFS for disjoint component of a graph
+  public static void dfsConnect(ArrayList<Edge>[] graph) {
+    boolean[] vis = new boolean[graph.length];
+    for (int i = 0; i < graph.length; i++) {
+      dfsUtil(graph, i, vis);
+    }
+  }
+
+  public static void dfsUtil(ArrayList<Edge>[] graph, int curr, boolean[] vis) {
+    System.out.println(curr + " ");
+    vis[curr] = true;
+    for (int i = 0; i < graph[curr].size(); i++) {
+      Edge e = graph[curr].get(i);
+      if (!vis[e.dest]) {
+        dfsUtil(graph, e.dest, vis);
+      }
+    }
+  }
+
   public static boolean hasPath(ArrayList<Edge> graph[], int src, int dest, boolean vis[]) {
     if (src == dest) {
       return true;
@@ -36,7 +99,7 @@ public class graphs {
     }
   }
 
-  public static void bfs(ArrayList<Edge>[] graph) {
+  public static void bfs(ArrayList<Edge>[] graph) { // O(V+E)
     Queue<Integer> q = new LinkedList<>();
     boolean vis[] = new boolean[graph.length];
     q.add(0);
@@ -87,12 +150,13 @@ public class graphs {
     @SuppressWarnings("unchecked")
     ArrayList<Edge> graph[] = new ArrayList[V];
     createGraph(graph);
-    for (int i = 0; i < graph[2].size(); i++) {
-      System.out.println(graph[2].get(i).dest + " ");
-    }
+    // for (int i = 0; i < graph[2].size(); i++) { // get destination from 2
+    // System.out.println(graph[2].get(i).dest + " ");
+    // }
 
-    // Traversal    
-    bfs(graph);
-    dfs(graph, 0, new boolean[V]);
+    // Traversal
+    // bfs(graph);
+    // dfs(graph, 0, new boolean[7]);
+
   }
 }
