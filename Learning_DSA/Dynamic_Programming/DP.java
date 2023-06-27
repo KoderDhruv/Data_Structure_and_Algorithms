@@ -1,12 +1,64 @@
 
 public class DP {
+  // Unbounded-knapsack
+  public static void unboundedKnapsack(int val[], int wt[], int W) {
+    int n = val.length;
+    int[][] dp = new int[n + 1][W + 1];
+    for (int i = 0; i < dp.length; i++)
+      dp[i][0] = 0;
+    for (int i = 0; i < dp[0].length; i++)
+      dp[0][i] = 0;
+    for (int i = 1; i < n + 1; i++) {
+      for (int j = 1; j < W + 1; j++) {
+        int v = val[i - 1];
+        int w = wt[i - 1];
+        if (w <= j) {
+          int excProfit = dp[i - 1][j];
+          int incProfit = v + dp[i][j - w];
+          dp[i][j] = Math.max(excProfit, incProfit);
+        } else {
+          dp[i][j] = dp[i - 1][j];
+        }
+      }
+    }
+    // print dp array
+    for (int i = 0; i < dp.length; i++) {
+      for (int j = 0; j < dp[0].length; j++) {
+        System.out.print(dp[i][j] + " ");
+      }
+      System.out.println();
+    }
+    System.out.println(dp[n][W]);
+  }
+
   // Target Sum Subset
   public static void targetSum(int arr[], int sum) {
     int n = arr.length;
     boolean[][] dp = new boolean[n + 1][sum + 1];
     for (int i = 0; i < n + 1; i++)
       dp[i][0] = true;
-
+    for (int i = 1; i < dp.length; i++) { // "i"
+      for (int j = 1; j < dp[0].length; j++) {
+        int val = arr[i - 1];
+        if (dp[i - 1][j] == true) {
+          dp[i][j] = true;
+        } else {
+          if (val <= j) {
+            if (dp[i - 1][j - val] == true) {
+              dp[i][j] = true;
+            }
+          }
+        }
+      }
+    }
+    // print dp array
+    for (int i = 0; i < dp.length; i++) {
+      for (int j = 0; j < dp[0].length; j++) {
+        System.out.print(dp[i][j] + " ");
+      }
+      System.out.println();
+    }
+    System.out.println(dp[n][sum]);
   }
 
   // 0-1 Knapsack
@@ -54,8 +106,8 @@ public class DP {
       dp[i][0] = 0;
     for (int i = 0; i < dp[0].length; i++)
       dp[0][i] = 0;
-    for (int i = 1; i < n + 1; i++) { // "i" is number of items
-      for (int j = 1; j < W + 1; j++) { // "j" is maximum weight
+    for (int i = 0; i < n + 1; i++) { // "i" is number of items
+      for (int j = 0; j < W + 1; j++) { // "j" is maximum weight
         int v = val[i - 1];
         int w = wt[i - 1];
         if (w <= j) { // ifValid
@@ -113,8 +165,16 @@ public class DP {
     // System.out.println(knapsackTabulation(val, wt, W, val.length));
 
     // Target-Sum
-    int arr[] = { 4, 2, 1, 7, 1, 3 };
-    int sum = 10;
-    targetSum(arr, sum);
+    // int arr[] = { 4, 2, 7, 1, 3 };
+    // int sum = 10;
+    // targetSum(arr, sum);
+
+    // Unbounded knapsack
+    // int val[] = { 15, 14, 10, 45, 30 };
+    // int wt[] = { 2, 3, 1, 3, 4 };
+    // int W = 7;
+    // unboundedKnapsack(val, wt, W);
+
+    // 
   }
 }
