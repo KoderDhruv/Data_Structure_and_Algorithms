@@ -1,7 +1,58 @@
 import java.util.*;
 
 public class DP {
-  // Wild Card-matching
+  // Matrix Chain Multiplication
+  public static void matrixChainMultiplication() {
+    
+  }
+
+  // Mountain Ranges
+  // pair of '/\', also same as Catalan's Number
+  // '/\' is base, we add inside and outside and add iteratively
+
+  // Counting BSTs - Count number of BSTs for a specific number of nodes.
+  // Answer will be same as Catalan's Number, think about it!!!!
+  // Iteratively add left and right
+
+  // Catalan's Number (Easy)
+  // C(n)= C(0)C(n-1) + C(1)C(n-2) + C(2)C(n-3)...C(n-1)C(0)
+  public static void catalabTabulation(int n) {
+    int dp[] = new int[n + 1];
+    dp[0] = 1;
+    dp[1] = 1;
+    for (int i = 2; i < n + 1; i++) {
+      for (int j = 0; j < i; j++) {
+        dp[i] += dp[j] * dp[i - j - 1];
+      }
+    }
+    // print dp
+    for (int i = 0; i < n + 1; i++)
+      System.out.print(dp[i] + " ");
+  }
+
+  public static int catalanMemoization(int n, int dp[]) {
+    if (n == 1 || n == 0)
+      return 1;
+    if (dp[n] != -1)
+      return dp[n];
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+      ans += catalanMemoization(i, dp) * catalanMemoization(n - i - 1, dp);
+    }
+    return dp[n] = ans;
+  }
+
+  public static int catalanRec(int n) {
+    if (n == 0 || n == 1)
+      return 1;
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+      ans += catalanRec(i) * catalanRec(n - i - 1);
+    }
+    return ans;
+  }
+
+  // Wild Card-matching (Hard)
   public static void wildCardMatching(String s, String p) {
     int n = s.length(), m = p.length();
     // Initialization
@@ -12,7 +63,7 @@ public class DP {
     for (int j = 1; j < m + 1; j++) {
       if (p.charAt(j - 1) == '*') { // will match previous value as it can take empty value
         dp[0][j] = dp[0][j - 1];
-      } else { 
+      } else {
         dp[0][j] = false;
       }
     }
@@ -347,6 +398,10 @@ public class DP {
     return dp[n][W];
   }
 
+  // Climbing Stairs
+  // Same as fibonacci if upto 2 jumps, we take sum of previous three if upto 3
+  // jumps possible
+
   // Fibonacci series
   public static int fibMemoization(int n) {
     int f[] = new int[n + 1];
@@ -435,5 +490,13 @@ public class DP {
     // String s = "baaabab";
     // String p = "*****ba*****ab";
     // wildCardMatching(s, p);
+
+    // Catalan's Number
+    // int n = 5;
+    // int dp[] = new int[n + 1];
+    // Arrays.fill(dp, -1);
+    // System.out.println(catalanRec(n));
+    // System.out.println(catalanMemoization(n, dp));
+    // catalabTabulation(n);
   }
 }
