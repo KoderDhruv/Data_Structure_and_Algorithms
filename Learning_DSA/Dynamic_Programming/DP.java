@@ -1,9 +1,107 @@
 import java.util.*;
 
 public class DP {
+  // Minimum Array Jumps
+  public static void minJumps(int nums[]) {
+    int n = nums.length;
+    int dp[] = new int[n];
+    Arrays.fill(dp, -1);
+    dp[n - 1] = 0;
+    for (int i = n - 2; i >= 0; i--) {
+      int steps = nums[i];
+      int ans = Integer.MAX_VALUE;
+      for (int j = i + 1; j <= i + steps && j < n; j++) {
+        if (dp[j] != -1) {
+          ans = Math.min(ans, dp[j] + 1);
+        }
+      }
+      if (ans != Integer.MAX_VALUE) {
+        dp[i] = ans;
+      }
+    }
+    System.out.println(dp[0]);
+  }
+
+  // Minimum Partitioning
+  public static void minPartition(int arr[]) { // Here we need to segregate into one bag with almost half the total
+                                               // value, to get minimum partition.
+    int n = arr.length;
+    int sum = 0;
+    for (int i = 0; i < n; i++)
+      sum += arr[i];
+    int W = sum / 2;
+    int dp[][] = new int[n + 1][W + 1];
+    for (int i = 1; i < n + 1; i++) {
+      for (int j = 1; j < W + 1; j++) {
+        if (arr[i - 1] <= j) {
+          dp[i][j] = Math.max(arr[i - 1] + dp[i - 1][j - arr[i - 1]], dp[i - 1][j]);
+        } else {
+          dp[i][j] = dp[i - 1][j];
+        }
+      }
+    }
+    int sum1 = dp[n][W];
+    int sum2 = sum - dp[n][W];
+    System.out.println(Math.abs(sum1 - sum2));
+  }
+
   // Matrix Chain Multiplication
-  public static void matrixChainMultiplication() {
-    
+  public static int matrixChainMultiplication(int arr[], int i, int j) {
+    // 'i' is starting index, 'j' is ending index and 'k' is pointer index that
+    // traverses the array
+    if (i == j)
+      return 0;
+    int ans = Integer.MAX_VALUE;
+    for (int k = i; k < j; k++) {
+      int cost1 = matrixChainMultiplication(arr, i, k);
+      int cost2 = matrixChainMultiplication(arr, k + 1, j);
+      int cost3 = arr[i - 1] * arr[k] * arr[j];
+      int finalCost = cost1 + cost2 + cost3;
+      ans = Math.min(ans, finalCost);
+    }
+    return ans;
+  }
+
+  public static int mcmMemoization(int arr[], int i, int j, int[][] dp) {
+    if (i == j)
+      return 0;
+    if (dp[i][j] != -1)
+      return dp[i][j];
+    int ans = Integer.MAX_VALUE;
+    for (int k = i; k < j; k++) {
+      int cost1 = mcmMemoization(arr, i, k, dp);
+      int cost2 = mcmMemoization(arr, k + 1, j, dp);
+      int cost3 = arr[i - 1] * arr[k] * arr[j];
+      int finalCost = cost1 + cost2 + cost3;
+      ans = Math.min(ans, finalCost);
+    }
+    return dp[i][j] = ans;
+  }
+
+  public static void mcmTabulation(int arr[]) {
+    int n = arr.length;
+    int dp[][] = new int[n][n];
+    for (int i = 0; i < arr.length; i++) // here we initialize diagonally
+      dp[i][i] = 0;
+    for (int len = 2; len < n; len++) {
+      for (int i = 1; i < n - len + 1; i++) {
+        int j = i + len - 1;
+        dp[i][j] = Integer.MAX_VALUE;
+        for (int k = i; k < j; k++) {
+          int cost1 = dp[i][k];
+          int cost2 = dp[k + 1][j];
+          int cost3 = arr[i - 1] * arr[k] * arr[j];
+          dp[i][j] = Math.min(dp[i][j], cost1 + cost2 + cost3);
+        }
+      }
+    }
+    for (int i = 0; i < dp.length; i++) {
+      for (int j = 0; j < dp[0].length; j++) {
+        System.out.print(dp[i][j] + " ");
+      }
+      System.out.println();
+    }
+    System.out.println(dp[1][n - 1]);
   }
 
   // Mountain Ranges
@@ -498,5 +596,26 @@ public class DP {
     // System.out.println(catalanRec(n));
     // System.out.println(catalanMemoization(n, dp));
     // catalabTabulation(n);
+
+    // Matrix Chain Multiplication
+    // int arr[] = { 1, 2, 3, 4, 3 };
+    // int n = arr.length;
+    // System.out.println(matrixChainMultiplication(arr, 1, n - 1));
+    // int dp[][] = new int[n][n];
+    // for (int i = 0; i < n; i++) {
+    // for (int j = 0; j < n; j++) {
+    // dp[i][j] = -1;
+    // }
+    // }
+    // System.out.println(mcmMemoization(arr, 1, n - 1, dp));
+    // mcmTabulation(arr);
+
+    // Minimum Partitioning
+    // int arr[] = { 1, 6, 11, 5 };
+    // minPartition(arr);
+
+    // Minimum array jumps
+    int nums[] = { 2, 3, 1, 1, 4 };
+    minJumps(nums);
   }
 }
