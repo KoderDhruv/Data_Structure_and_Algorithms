@@ -1,7 +1,7 @@
 class Solution {
     static int Prec(char ch) {
         switch (ch) {
-            case '+':
+            case '+':   
             case '-':
                 return 1;
             case '*':
@@ -16,10 +16,8 @@ class Solution {
     public static String infixToPostfix(String exp) {
         Stack<Character> st = new Stack<>();
         StringBuilder res = new StringBuilder();
-
         for (int i = 0; i < exp.length(); i++) {
             char c = exp.charAt(i);
-
             if (Character.isLetterOrDigit(c)) {
                 res.append(c);
             } else if (c == '(') {

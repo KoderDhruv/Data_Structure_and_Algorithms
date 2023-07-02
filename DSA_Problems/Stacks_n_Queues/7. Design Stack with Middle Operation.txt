@@ -19,7 +19,6 @@ public class myStack {
 	/* Function to push an element to the stack */
 	void push(int new_data)
 	{
-
 		/* allocate DLLNode and put in data */
 		DLLNode new_node = new DLLNode(new_data);
 		// if stack is empty
