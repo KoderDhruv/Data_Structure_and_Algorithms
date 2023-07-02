@@ -12,7 +12,7 @@ public class DP {
       int ans = Integer.MAX_VALUE;
       for (int j = i + 1; j <= i + steps && j < n; j++) {
         if (dp[j] != -1) {
-          ans = Math.min(ans, dp[j] + 1);
+          ans = Math.min(ans, dp[j] + 1);  
         }
       }
       if (ans != Integer.MAX_VALUE) {
